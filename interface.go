@@ -27,6 +27,15 @@ type AnyConnectorFactory interface {
 // Connector is responsible for deploying a container image on the specified target. Once deployed and ready, the
 // connector returns an I/O to communicate with the plugin.
 type Connector interface {
+	// Deploy instructs the connector to aquire the plugin and run it,
+	// resulting in the plugin starting its ATP server.
+	// The ATP server will be accessible through the `Plugin` interface.
+	//
+	// Parameters:
+	// ctx: The context that lasts the length of the deployment.
+	// 	     Cancelling the context will send a SIGTERM request to terminate the deployment,
+	//       which can be used to cancel the running step.
+	// image: The tag of the image to run.
 	Deploy(ctx context.Context, image string) (Plugin, error)
 }
 
