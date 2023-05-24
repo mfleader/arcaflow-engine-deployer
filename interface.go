@@ -35,8 +35,9 @@ type Connector interface {
 	// ctx: The context that lasts the length of the deployment.
 	// 	     Cancelling the context will send a SIGTERM request to terminate the deployment,
 	//       which can be used to cancel the running step.
-	// image: The tag of the image to run.
-	Deploy(ctx context.Context, image string) (Plugin, error)
+	// pluginSource: The source of the plugin. This can be the tag of the image to run, a Python module, or
+	//		 anything else that the deployer supports.
+	Deploy(ctx context.Context, pluginSource string) (Plugin, error)
 }
 
 // Plugin is single, possibly containerized instance of a plugin. When read from, this interface provides the stdout of
