@@ -27,7 +27,17 @@ type AnyConnectorFactory interface {
 // Connector is responsible for deploying a container image on the specified target. Once deployed and ready, the
 // connector returns an I/O to communicate with the plugin.
 type Connector interface {
-	Deploy(ctx context.Context, image string) (Plugin, error)
+	// Deploy instructs the connector to aquire the plugin and run it,
+	// resulting in the plugin starting its ATP server.
+	// The ATP server will be accessible through the `Plugin` interface.
+	//
+	// Parameters:
+	// ctx: The context that lasts the length of the deployment.
+	// 	     Cancelling the context will send a SIGTERM request to terminate the deployment,
+	//       which can be used to cancel the running step.
+	// pluginSource: The source of the plugin. This can be the tag of the image to run, a Python module, or
+	//		 anything else that the deployer supports.
+	Deploy(ctx context.Context, pluginSource string) (Plugin, error)
 }
 
 // Plugin is single, possibly containerized instance of a plugin. When read from, this interface provides the stdout of
