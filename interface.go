@@ -47,4 +47,5 @@ type Plugin interface {
 	io.Reader
 	io.Writer
 	io.Closer
+	ID() string
 }
