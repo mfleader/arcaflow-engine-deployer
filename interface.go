@@ -13,14 +13,16 @@ import (
 // to provide the configuration schema for the connector and then create an instance of said connector.
 type ConnectorFactory[ConfigType any] interface {
 	ID() string
-	ConfigurationSchema() *schema.TypedScopeSchema[ConfigType]
+	ConfigurationSchema() map[string]*schema.TypedScopeSchema[ConfigType]
 	Create(config ConfigType, logger log.Logger) (Connector, error)
 }
 
 // AnyConnectorFactory is the untyped version of ConnectorFactory.
 type AnyConnectorFactory interface {
 	ID() string
-	ConfigurationSchema() schema.Object
+	// change configuration schema to a map of deployment type strings
+	// schema.Object
+	ConfigurationSchema() map[string]schema.Object
 	Create(config any, logger log.Logger) (Connector, error)
 }
 
