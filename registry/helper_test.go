@@ -28,6 +28,10 @@ func (t testNewFactory) ConfigurationSchema() schema.Object {
 	)
 }
 
+func (t testNewFactory) DeploymentType() deployer.DeploymentType {
+	return "test"
+}
+
 func (t testNewFactory) Create(_ any, _ log.Logger) (deployer.Connector, error) {
 	return &testConnector{}, nil
 }
