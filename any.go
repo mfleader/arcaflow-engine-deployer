@@ -25,5 +25,5 @@ func (a anyDeployerFactory[T]) ConfigurationSchema() schema.Object {
 }
 
 func (a anyDeployerFactory[T]) Create(config any, logger log.Logger) (Connector, error) {
-	return a.factory.Create(config.(T), logger)
+	return a.factory.Create(config.(T), 0, logger)
 }

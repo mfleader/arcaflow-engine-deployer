@@ -50,7 +50,7 @@ func (r registry) Create(config any, logger log.Logger) (deployer.Connector, err
 	reflectedConfig := reflect.ValueOf(config)
 	for _, factory := range r.deployerFactories {
 		if factory.ConfigurationSchema().ReflectedType() == reflectedConfig.Type() {
-			return factory.Create(config, logger)
+			return factory.Create(config, 0, logger)
 		}
 	}
 	return nil, fmt.Errorf("could not identify correct deployer factory for %T", config)
